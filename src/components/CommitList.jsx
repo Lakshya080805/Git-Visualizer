@@ -2,8 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { dummyCommits } from '../data/dummyCommits';
 import { branchColors } from '../utils/colors';
 
-export default function CommitList({ hoveredCommit, searchTerm }) {
+export default function CommitList({
+  hoveredCommit,
+  searchTerm,
+  selectedBranch,
+  onClickCommit,
+  onHoverCommit,
+}) {
   const commitRefs = useRef({});
+
+  // ✅ Filtered commits
+  const commits = selectedBranch === 'all'
+    ? dummyCommits
+    : dummyCommits.filter((c) => c.branch === selectedBranch);
 
   // ✅ Scroll on hover
   useEffect(() => {
@@ -19,7 +30,7 @@ export default function CommitList({ hoveredCommit, searchTerm }) {
   useEffect(() => {
     if (!searchTerm) return;
 
-    const found = dummyCommits.find(
+    const found = commits.find(
       (c) =>
         c.hash.toLowerCase().includes(searchTerm.toLowerCase()) ||
         c.message.toLowerCase().includes(searchTerm.toLowerCase())
@@ -31,15 +42,19 @@ export default function CommitList({ hoveredCommit, searchTerm }) {
         block: 'center',
       });
     }
-  }, [searchTerm]);
+  }, [searchTerm, selectedBranch]);
 
   return (
     <div className="space-y-4 mt-4 max-h-80 overflow-y-auto">
-      {dummyCommits.map((commit) => (
+      {commits.map((commit) => (
         <div
           key={commit.hash}
+          id={`commit-${commit.hash}`} // ✅ For smooth scroll on select
           ref={(el) => (commitRefs.current[commit.hash] = el)}
-          className={`p-4 bg-white shadow rounded-lg border-l-4 transition
+          onMouseEnter={() => onHoverCommit && onHoverCommit(commit.hash)}
+          onMouseLeave={() => onHoverCommit && onHoverCommit(null)}
+          onClick={() => onClickCommit && onClickCommit(commit.hash)}
+          className={`cursor-pointer p-4 bg-white shadow rounded-lg border-l-4 transition
             ${hoveredCommit === commit.hash ? 'bg-blue-50 scale-[1.02]' : ''}
           `}
           style={{ borderLeftColor: branchColors[commit.branch] }}

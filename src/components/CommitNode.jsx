@@ -1,15 +1,18 @@
 import React from "react";
 
-const CommitNode = ({ data, onHover }) => {
+const CommitNode = ({ data, onHover, onClick }) => {
   return (
     <div
-      className="relative group"
-      onMouseEnter={() => onHover && onHover(data.label)} // ✅ Hover start
-      onMouseLeave={() => onHover && onHover(null)}      // ✅ Hover end
+      className="relative group cursor-pointer"
+      onMouseEnter={() => onHover && onHover(data.label)}
+      onMouseLeave={() => onHover && onHover(null)}
+      onClick={() => onClick && onClick(data.label)}
     >
-      {/* Commit Node */}
       <div
-        className="px-4 py-2 rounded-md text-white font-bold shadow-md border-2"
+        className={`px-4 py-2 rounded-md text-white font-bold shadow-md border-2
+          transform transition duration-200
+          hover:scale-105 hover:shadow-lg
+          ${data.isHighlighted ? 'scale-110 ring-2 ring-green-400' : ''}`}
         style={{
           backgroundColor: data.color,
           borderColor: data.borderColor || data.color,
