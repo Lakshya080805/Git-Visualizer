@@ -1,4 +1,4 @@
-// src/data/dummyCommits.js
+
 export const dummyCommits = [
   {
     hash: 'a1b2c3',
