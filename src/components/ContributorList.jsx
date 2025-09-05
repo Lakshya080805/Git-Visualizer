@@ -4,7 +4,8 @@ function ContributorList({ contributors }) {
   if (!contributors || contributors.length === 0) return null;
 
   return (
-    <div className="mt-8 mb-2">
+    <div className="mt-16 mb-4">
+
       <h3 className="font-semibold mb-3 text-base text-white">Top Contributors</h3>
       <ul>
         {contributors.map(c => (
