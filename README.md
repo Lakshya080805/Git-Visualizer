@@ -2,6 +2,12 @@
   <b>Interactive GitHub Repository Analytics Dashboard built with React & GitHub API.</b>
 </p>
 
+<p align="center">
+  <a href="https://git-visualizer-rose.vercel.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Visit-brightgreen?style=for-the-badge" />
+  </a>
+</p>
+
 # 📊 GitHub Visualizer
 ### A Modern Frontend Dashboard for Visualizing GitHub Repository Insights
 
